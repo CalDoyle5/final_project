@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 import config
-from models import Roster
+from models import Roster, registration
 import orm
 import repository
 import services
@@ -21,12 +21,12 @@ def roster_endpoint():
         request.json["id"], request.json["organization_name"], request.json["player_id"], request.json["coach_id"])
 #     ) #Based off the class created or the table created?
 
-#     try:
-#         batchref = services.allocate(line, repo, session)
-#     except (models.OutOfStock, services.InvalidSku) as e: #What goes in services.py to make this work not out of stock byt a version of what i have
-#         return {"message": str(e)}, 400
+    try:
+        batchref = services.register(line, repo, session)
+    except (Roster, services.registration) as e: #What goes in services.py to make this work not out of stock byt a version of what i have
+        return {"message": str(e)}, 400
 
-    # return {"batchref": batchref}, 201
+    return {"rosterref": rosterref}, 201
 
 """What do i do"""
 

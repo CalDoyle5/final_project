@@ -1,24 +1,25 @@
-# import uuid
-# import pytest
-# import requests
+import uuid
+import pytest
+import requests
 
-# import config
-
-
-# def random_suffix():
-#     return uuid.uuid4().hex[:6]
+import config
 
 
-# def random_player(name=""):
-#     return f"player-{name}-{random_suffix()}"
+def random_suffix():
+    return uuid.uuid4().hex[:6]
 
 
-# def random_roster(name=""):
-#     return f"batch-{name}-{random_suffix()}"
+def random_player(name=""):
+    return f"player-{name}-{random_suffix()}"
 
 
-# def random_playerid(name=""):
-#     return f"order-{name}-{random_suffix()}"
+def random_roster(name=""):
+    return f"roster-{name}-{random_suffix()}"
+
+
+def random_playerid(name=""):
+    return f"playerid-{name}-{random_suffix()}"
+
 
 
 # @pytest.mark.usefixtures("restart_api")

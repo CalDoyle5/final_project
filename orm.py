@@ -26,29 +26,45 @@ players = Table(
     Column("last_name", String(30)),
     Column("organization_name", String(100)),
     Column("position", String(10)),
-    Column("age", Integer)
+    Column("age", Integer),
+    Column("roster", String(50)),
 )
 
-# rosters = Table(
-#     "rosters",  
-#     metadata,
-#     Column("id", Integer, primary_key=True, autoincrement=True),
-#     Column("organization_name", String(50)),
-#     Column("player_id",), #ForeignKey("player.id")),
-#     Column("coach_id",) #ForeignKey("coach.id")),
-# )
+rosters = Table(
+    "rosters",  
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("organization_name", String(50)),
+    Column("player_id", Integer), #ForeignKey("player.id")),
+    Column("coach_id", Integer) #ForeignKey("coach.id")),
+)
 
 
-# scouts = Table(
-#     "scouts",
-#     metadata,
-#     Column("id", Integer, primary_key=True, autoincrement=True),
-#     Column("first_name", String(30)),
-#     Column("last_name", String(30)),
-#     Column("organization_name", String(100)),
-#     Column("age", Integer),
-#     Column("scout_id", Integer),
-# )
+trades = Table(
+    "trades",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("first_name", String(30)),
+    Column("last_name", String(30)),
+    Column("organization_name", String(100)),
+    Column("age", Integer),
+    Column("scout_id", Integer),
+    Column("team_id", Integer),
+    Column("player_id", Integer),
+    Column("date", Date),
+)
+
+
+scouts = Table(
+    "scouts",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("first_name", String(30)),
+    Column("last_name", String(30)),
+    Column("organization_name", String(100)),
+    Column("age", Integer),
+    Column("scout_id", Integer),
+)
 
 
 # registrations = Table(
@@ -79,9 +95,10 @@ players = Table(
 
 def start_mappers():
     player_mapper = mapper(models.Player, players)
-    #scout_mapper = mapper(models.Scout, scouts)
+    scout_mapper = mapper(models.Scout, scouts)
     coach_mapper = mapper(models.Coach, coaches)
-    #roster_mapper = mapper(models.Roster, rosters)
+    roster_mapper = mapper(models.Roster, rosters)
+    trades_mapper = mapper(models.Trade, trades)
     #     model.Roster,
     #     rosters,
     #     properties={

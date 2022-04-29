@@ -1,5 +1,6 @@
 from charset_normalizer import models
-from models import Player
+#from flask_app import roster_endpoint
+from models import Player, Roster
 # test mapper
 
 # test retireving players
@@ -28,6 +29,17 @@ def test_retrieving_players(session):
     
     #Test that players are not __eq__
     #local variable that says: are the same= False
+
+# def test_trading_player_to_new_roster(session):
+#     player = Player(3, "Liam", "Doyle", "Saints", "defender", 22)
+#     roster1 = Roster(1)
+#     roster2 = Roster(2)
+#     session.add(player)
+#     session.commit()
+#     rows = session.execute(
+#         'SELECT id, first_name, last_name, organization_name, position, age FROM "players"'
+#     )
+#     assert roster1 != roster2
 
 
 def test_saving_player(session):

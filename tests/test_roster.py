@@ -4,10 +4,10 @@ from models import Coach, Player, Roster, Scout
 
 def test_roster_quantity():
     # arrange
-    coach = Coach(1, "super", "coach", "all blacks", 40)
+    roster = Roster(1)
+    coach = Coach(1, "super", "coach", "all blacks", 40, roster)
     player1 = Player(1, "super", "center", "all blacks", "center", 12)
     player2 = Player(2, "super", "forward", "all blacks", "forward", 13)
-
     # act
     coach.roster.add_player(player1)
     coach.roster.add_player(player2)
@@ -18,6 +18,7 @@ def test_roster_quantity():
 
 def test_scout_roster_quantity():
     # arrange
+    roster = Roster(1)
     scout = Scout(1, "super", "scout", "saints", 40, 21)
     player1 = Player(1, "super", "center", "all blacks", "center", 12)
 
@@ -31,7 +32,8 @@ def test_scout_roster_quantity():
 def test_player_age():
 
     # arrange
-    coach = Coach(1, "super", "coach", "all blacks", 40)
+    roster = Roster(1)
+    coach = Coach(1, "super", "coach", "all blacks", 40, roster)
     player = Player(1, "super", "center", "all blacks", "center", 12)
 
     # act
@@ -58,7 +60,8 @@ def test_scout_validation():
 def test_coach_validation():
 
     # arrange
-    coach = Coach(1, "super", "scout", "saints", 40)
+    roster = Roster(1)
+    coach = Coach(1, "super", "scout", "saints", 40, roster)
 
     # act
     coach.check_age(22)

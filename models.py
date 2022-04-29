@@ -12,7 +12,7 @@ class FullRoster(Exception):
     pass
 
 
-def registration(player, rosters):
+def registration(player, rosters: List[Roster]) -> str:
     try:
         roster = next(r for r in sorted(rosters) if r.can_allocate(player))
         roster.allocate(player)
@@ -31,12 +31,12 @@ class Person:
 
 class Coach(Person):
     def __init__(
-        self, id: int, first_name: str, last_name: str, organization_name: str, age: int
+        self, id: int, first_name: str, last_name: str, organization_name: str, age: int, roster: Roster
     ):
         super().__init__(id, first_name, last_name, age)
 
         self.organization_name = organization_name
-        self.roster = Roster()
+        self.roster = roster
         self.validated = False
 
     def get_roster(self):
@@ -60,9 +60,10 @@ class Player(Person):
 
 
 class Roster:
-    def __init__(self): #qty: int): #SHould i add a rosterref(Check services.allocate)
+    def __init__(self, team_id: int): #qty: int): #SHould i add a rosterref(Check services.allocate)
 
         self.roster = []
+        self.team_id = team_id
         #self.qty = qty
     def remove_players(self, id: int):
         pass
@@ -73,7 +74,7 @@ class Roster:
     def get_roster_quantity(self):
         return len(self.roster)
     
-    def check_roster_size() -> bool:
+    def check_roster_size(self) -> bool:
         return self.roster.__len__ > 2 and self.roster.__len__ < 10
 
 
@@ -91,3 +92,18 @@ class Scout(Person, Roster):
 
     def check_age(self, age: int) -> bool:
         return age > 21
+
+
+class Trade(Player, Roster):
+    def __init__(self, id: int, first_name: str, last_name: str, organization_name: str, age: int, scout_id: int, team_id: int, date: date):
+        
+        super().__init__(id, first_name, last_name, organization_name, age, scout_id)
+
+        self.team_id = team_id
+        self.date = date
+
+    def add_player(self, player: Player): #What goes here instead of player class 
+        self.roster.append(player)
+    
+    def remove_players(self, id: int):
+        pass
