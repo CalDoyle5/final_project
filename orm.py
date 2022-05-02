@@ -1,56 +1,55 @@
 from sqlite3 import IntegrityError
+from xmlrpc.client import Boolean
 from charset_normalizer import models
-from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Table, MetaData, Column, Integer, String, Date, ForeignKey, column, Boolean
 from sqlalchemy.orm import mapper, relationship
 
-import models 
-
+import models
+import new_model
 
 metadata = MetaData()
 
 coaches = Table(
     "coaches",  #Column('person_id', Integer, ForeignKey(tbl_person.c.id), primary_key=True)
     metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("coach_id", Integer, primary_key=True, autoincrement=True),
     Column("first_name", String(30)),
     Column("last_name", String(30)),
     Column("organization_name", String(100)),
     Column("age", Integer)
 )
-
+# player_id, team_id, coach_id, scout_id, first_name, last_name, decision
 players = Table(
-    "players",  # id: int, first_name: str, last_name: str, organization_name: str, position: str, age: int
+    "players",  
     metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("player_id", Integer, primary_key=True, autoincrement=True),
+    Column("team_id", Integer),
+    Column("coach_id", Integer),
+    Column("scout_id", Integer),
     Column("first_name", String(30)),
     Column("last_name", String(30)),
-    Column("organization_name", String(100)),
-    Column("position", String(10)),
-    Column("age", Integer),
-    Column("roster", String(50)),
+    Column("decision", Boolean),
+    #Column("date_traded", Date),
 )
 
-rosters = Table(
-    "rosters",  
+
+teams = Table(
+    "teams",  
     metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("team_id", Integer, primary_key=True, autoincrement=True),
     Column("organization_name", String(50)),
     Column("player_id", Integer), #ForeignKey("player.id")),
     Column("coach_id", Integer) #ForeignKey("coach.id")),
 )
 
-
 trades = Table(
     "trades",
     metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("first_name", String(30)),
-    Column("last_name", String(30)),
-    Column("organization_name", String(100)),
-    Column("age", Integer),
+    Column("trade_id", Integer, primary_key=True, autoincrement=True),
     Column("scout_id", Integer),
-    Column("team_id", Integer),
     Column("player_id", Integer),
+    Column("coach_id", Integer),
+    Column("team_id", Integer),
     Column("date", Date),
 )
 
@@ -58,12 +57,11 @@ trades = Table(
 scouts = Table(
     "scouts",
     metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("scout_id", Integer, primary_key=True, autoincrement=True),
     Column("first_name", String(30)),
     Column("last_name", String(30)),
     Column("organization_name", String(100)),
     Column("age", Integer),
-    Column("scout_id", Integer),
 )
 
 
@@ -94,11 +92,11 @@ scouts = Table(
 #
 
 def start_mappers():
-    player_mapper = mapper(models.Player, players)
-    scout_mapper = mapper(models.Scout, scouts)
-    coach_mapper = mapper(models.Coach, coaches)
-    roster_mapper = mapper(models.Roster, rosters)
-    trades_mapper = mapper(models.Trade, trades)
+    player_mapper = mapper(new_model.Player, players)
+    scout_mapper = mapper(new_model.Scout, scouts)
+    coach_mapper = mapper(new_model.Coach, coaches)
+    roster_mapper = mapper(new_model.Team, teams)
+    trades_mapper = mapper(new_model.Trade, trades)
     #     model.Roster,
     #     rosters,
     #     properties={

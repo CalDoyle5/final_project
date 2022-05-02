@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 import config
 from models import Roster, registration
+import new_model
 import orm
 import repository
 import services
